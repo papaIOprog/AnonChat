@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "com.papaio.anonchat.user-prefix",
+      "type": "java.lang.String",
+      "description": "Defines prefix for specified-user messages channel.",
+      "sourceType": "com.papaio.anonchat.properties.ApplicationProperties"
+    },
+    {
+      "name": "com.papaio.anonchat.system-name",
+      "type": "java.lang.String",
+      "description": "Name of system that will be displayed in server messages, notifications, warnings and etc.",
+      "sourceType": "com.papaio.anonchat.properties.ApplicationProperties"
+    }
+  ]
+}
