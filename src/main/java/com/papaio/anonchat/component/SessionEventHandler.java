@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import static com.papaio.anonchat.model.MessageTypes.NOTIFICATION;
 
 @Component
-public class UserSubscriptionNotifier {
+public class SessionEventHandler {
 
     @Value("${com.papaio.anonchat.user-prefix}")
     private String userPrefix;
@@ -28,7 +28,7 @@ public class UserSubscriptionNotifier {
     private final SimpMessagingComponent simpMessagingComponent;
 
     @Autowired
-    public UserSubscriptionNotifier(SimpMessagingComponent simpMessagingComponent) {
+    public SessionEventHandler(SimpMessagingComponent simpMessagingComponent) {
         this.simpMessagingComponent = simpMessagingComponent;
         destinationLookupTable = new HashMap<>();
     }
