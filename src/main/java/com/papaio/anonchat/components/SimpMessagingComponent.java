@@ -4,6 +4,8 @@ import com.papaio.anonchat.models.ServerMessage;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Stream;
+
 @Component
 public class SimpMessagingComponent {
 
@@ -16,5 +18,12 @@ public class SimpMessagingComponent {
     public void sendMessage(ServerMessage message, String channel) {
         if (message.getToUser() != null) template.convertAndSendToUser(message.getToUser(), channel, message);
         else template.convertAndSend(channel, message);
+    }
+
+    public void sendMessageForListed(ServerMessage message, String channel, Stream<String> users) {
+        users.forEach((user) -> {
+            message.setToUser(user);
+            sendMessage(message, channel);
+        });
     }
 }

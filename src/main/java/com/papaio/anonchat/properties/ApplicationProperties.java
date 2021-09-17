@@ -16,8 +16,8 @@ public class ApplicationProperties {
         return systemName;
     }
 
-    public void setSystemName(String systemname) {
-        this.systemName = systemname;
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
     public String getUserPrefix() {

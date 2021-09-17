@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static com.papaio.anonchat.models.MessageTypes.NOTIFICATION;
 
@@ -39,17 +40,23 @@ public class UserSubscriptionNotifier {
         String userName = Objects.requireNonNull(event.getUser()).getName();
 
         if (simpDestination != null) {
+
             destinationLookupTable.putIfAbsent(userName, new HashSet<>());
             HashSet<String> channels = destinationLookupTable.get(userName);
             channels.add(simpDestination);
-            ServerMessage notificationMessage = new ServerMessage(systemName, NOTIFICATION, userName + " connected");
-            simpMessagingComponent.sendMessage(notificationMessage, simpDestination);
 
             if (!simpDestination.startsWith(userPrefix)) {
-                int usersCount = 0;
-                for (String key : destinationLookupTable.keySet()) {
-                    if (destinationLookupTable.get(key).contains(simpDestination)) usersCount++;
-                }
+
+                ServerMessage notificationMessage = new ServerMessage(systemName, NOTIFICATION, userName + " connected");
+                Stream<String> channelUsers = destinationLookupTable.keySet().stream()
+                        .filter((user) -> !user.equals(userName) && destinationLookupTable.get(user).contains(simpDestination));
+                simpMessagingComponent.sendMessageForListed(notificationMessage, simpDestination, channelUsers);
+
+                long usersCount = destinationLookupTable.keySet()
+                        .stream()
+                        .filter((user) -> !user.equals(userName) && destinationLookupTable.get(user).contains(simpDestination))
+                        .count();
+
                 ServerMessage infoMessage = new ServerMessage(systemName, userName, NOTIFICATION, "Users in channel: " + usersCount);
                 simpMessagingComponent.sendMessage(infoMessage, simpDestination);
             }
