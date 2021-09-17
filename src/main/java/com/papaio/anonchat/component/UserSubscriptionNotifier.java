@@ -1,6 +1,6 @@
-package com.papaio.anonchat.components;
+package com.papaio.anonchat.component;
 
-import com.papaio.anonchat.models.ServerMessage;
+import com.papaio.anonchat.model.ServerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static com.papaio.anonchat.models.MessageTypes.NOTIFICATION;
+import static com.papaio.anonchat.model.MessageTypes.NOTIFICATION;
 
 @Component
 public class UserSubscriptionNotifier {

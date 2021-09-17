@@ -1,4 +1,4 @@
-package com.papaio.anonchat.models;
+package com.papaio.anonchat.model;
 
 public class Message {
 

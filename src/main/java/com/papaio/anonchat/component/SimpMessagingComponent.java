@@ -1,6 +1,6 @@
-package com.papaio.anonchat.components;
+package com.papaio.anonchat.component;
 
-import com.papaio.anonchat.models.ServerMessage;
+import com.papaio.anonchat.model.ServerMessage;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
 package com.papaio.anonchat.controller;
 
-import com.papaio.anonchat.components.SimpMessagingComponent;
-import com.papaio.anonchat.models.Message;
-import com.papaio.anonchat.models.ServerMessage;
+import com.papaio.anonchat.component.SimpMessagingComponent;
+import com.papaio.anonchat.model.Message;
+import com.papaio.anonchat.model.ServerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
 
-import static com.papaio.anonchat.models.MessageTypes.COMMON;
-import static com.papaio.anonchat.models.MessageTypes.PRIVATE;
+import static com.papaio.anonchat.model.MessageTypes.COMMON;
+import static com.papaio.anonchat.model.MessageTypes.PRIVATE;
 
 @Controller
 public class MessageController {
