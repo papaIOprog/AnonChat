@@ -1,8 +1,6 @@
 <template>
-  <div class="application-container vertically-centered">
-    <div>
-      <StartBox></StartBox>
-    </div>
+  <div class="application-container">
+    <Chat></Chat>
   </div>
 </template>
 

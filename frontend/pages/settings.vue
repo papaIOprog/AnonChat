@@ -1,19 +1,15 @@
 <template>
   <div class="application-container vertically-centered">
-    <div>
-      <StartBox></StartBox>
-    </div>
+    <SettingsPanel></SettingsPanel>
   </div>
 </template>
 
 <script>
-
 export default {
   transition: 'main',
-
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

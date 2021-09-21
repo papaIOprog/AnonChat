@@ -1,0 +1,22 @@
+@import "./colors";
+@import "./typography";
+@import "./fonts";
+@import "./elements";
+@import "./icons";
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.scrollable-y {
+  overflow-y: scroll;
+}
+
+.main-enter-active, .main-leave-active {
+  transition: opacity .25s
+}
+
+.main-enter, .main-leave-active {
+  opacity: 0
+}

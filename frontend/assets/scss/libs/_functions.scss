@@ -1,0 +1,65 @@
+@use "sass:math";
+
+// Color contrast
+@function color-yiq($color, $dark: $yiq-text-dark, $light: $yiq-text-light) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $yiq: math.div($r * 299 + $g * 587 + $b * 114, 1000);
+
+  @if ($yiq >= $yiq-contrasted-threshold) {
+    @return $dark;
+  } @else {
+    @return $light;
+  }
+}
+
+@function tint-color($color, $percentage) {
+  @return mix(#FFF, $color, $percentage);
+}
+
+@function shade-color($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}
+
+@function spacing($steps) {
+  @return $steps * 8px;
+}
+
+@function get-colored-triangles($color) {
+  $triangles: (
+    'top': (
+      "left": ("width": 0 0 16px 16px,
+        "color": transparent transparent transparent $color),
+      "right": ("width": 0 16px 16px 0,
+        "color": transparent $color transparent transparent),
+    )
+  );
+  @return $triangles;
+}
+
+$media-phone: 360px;
+$media-tablet: 768px;
+$media-sm-desktop: 1024px;
+$media-desktop: 1160px;
+
+@function translate-media-condition($c) {
+  $conditionsMap: (
+    "phone": "(max-width: #{$media-phone - 1px})",
+    "tablet": "(min-width: #{$media-phone}) and (max-width: #{$media-tablet - 1px})",
+    "sm-desktop": "(min-width: #{$media-tablet}) and (max-width: #{$media-sm-desktop - 1px})",
+    "desktop": "(min-width: #{$media-sm-desktop})",
+  );
+  @return map-get($conditionsMap, $c);
+}
+
+@mixin media($args...) {
+  $result: "";
+  @each $arg in $args {
+    $result: translate-media-condition($arg);
+    @media #{$result}  {
+      @content;
+    }
+  }
+}

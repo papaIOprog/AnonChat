@@ -1,0 +1,64 @@
+@import "./libs/variables";
+@import "./libs/functions";
+
+@each $color in map-keys($bg-colors) {
+  .bg-color-#{$color} {
+    $color-bg: map-get($bg-colors, $color);
+    background-color: $color-bg !important;
+    color: color-yiq($color-bg) !important;
+    transition: background-color $transition-time-base;
+    border: none;
+    scrollbar-color: color-yiq($color-bg) transparentize(color-yiq(color-yiq($color-bg)), 0.5);
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparentize(color-yiq(color-yiq($color-bg)), 0.5);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: color-yiq($color-bg);
+    }
+
+    &:before, &:after {
+      transition: all $transition-time-base;
+      border-color: $color-bg !important;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.hover-effect {
+      transition: background-color $transition-time-base;
+
+      &:hover {
+        background-color: darken($color-bg, 5%) !important;
+
+        &:disabled {
+          background-color: $color-bg !important;
+        }
+      }
+
+      &.pointer {
+        cursor: pointer;
+
+        &:disabled {
+          cursor: default;
+        }
+      }
+    }
+
+    &.border {
+      border: solid 1px color-yiq($color-bg);
+    }
+
+    &.border-colored {
+      border: solid 1px $color-bg;
+    }
+  }
+}

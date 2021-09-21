@@ -1,0 +1,21 @@
+@import "./libs/variables";
+
+* {
+  font-size: $font-size-base;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: $font-weight-base;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+span, p, h1, h2, h3, h4, h5, h6 {
+  padding: spacing(1);
+}
+
+@each $size in map-keys($font-sizes) {
+  h#{$size} {
+    font-size: map-get($font-sizes, $size)
+  }
+}

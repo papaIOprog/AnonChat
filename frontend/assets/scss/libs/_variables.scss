@@ -1,0 +1,178 @@
+//transitions
+$transition-time-base: 0.25s;
+
+//margin
+$default-margin: spacing(1);
+
+//colors definitions
+
+$white: #fffffe !default;
+$gray-100: #E8E8E7 !default;
+$gray-200: #D0D0D0 !default;
+$gray-300: #B9B9BA !default;
+$gray-400: #A2A2A3 !default;
+$gray-500: #8B8B8C !default;
+$gray-600: #737375 !default;
+$gray-700: #5C5C5E !default;
+$gray-800: #454548 !default;
+$gray-900: #2D2D31 !default;
+$black: #16161a !default;
+
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
+) !default;
+
+$dark-gray-100: #404043 !default;
+$dark-gray-200: #3C3C3F !default;
+$dark-gray-300: #37373A !default;
+$dark-gray-400: #323236 !default;
+$dark-gray-500: #2E2E31 !default;
+$dark-gray-600: #29292C !default;
+$dark-gray-700: #242428 !default;
+$dark-gray-800: #1F1F23 !default;
+$dark-gray-900: #1B1B1F !default;
+
+$dark-greys: (
+  "100": $dark-gray-100,
+  "200": $dark-gray-200,
+  "300": $dark-gray-300,
+  "400": $dark-gray-400,
+  "500": $dark-gray-500,
+  "600": $dark-gray-600,
+  "700": $dark-gray-700,
+  "800": $dark-gray-800,
+  "900": $dark-gray-900
+) !default;
+
+$blue: #3da9fc !default;
+$blue-light: lighten($blue, 20%) !default;
+$blue-dark: darken($blue, 25%) !default;
+$indigo: #3B3BBE !default;
+$indigo-light: lighten($indigo, 20%) !default;
+$indigo-dark: darken($indigo, 25%) !default;
+$purple: #7f5af0 !default;
+$purple-light: lighten($purple, 20%) !default;
+$purple-dark: darken($purple, 25%) !default;
+$pink: #D14983 !default;
+$pink-light: lighten($pink, 20%) !default;
+$pink-dark: darken($pink, 25%) !default;
+$red: #fa5246 !default;
+$red-light: lighten($red, 20%) !default;
+$red-dark: darken($red, 25%) !default;
+$orange: #faae2b !default;
+$orange-light: lighten($orange, 20%) !default;
+$orange-dark: darken($orange, 25%) !default;
+$yellow: #fde24f !default;
+$yellow-light: lighten($yellow, 20%) !default;
+$yellow-dark: darken($yellow, 25%) !default;
+$green: #22B45E !default;
+$green-light: lighten($green, 20%) !default;
+$green-dark: darken($green, 25%) !default;
+$teal: #2fbba5 !default;
+$teal-light: lighten($teal, 20%) !default;
+$teal-dark: darken($teal, 25%) !default;
+$cyan: #25CFF2 !default;
+$cyan-light: lighten($cyan, 20%) !default;
+$cyan-dark: darken($cyan, 25%) !default;
+$primary: $dark-gray-700 !default;
+$primary-light: $dark-gray-500 !default;
+$primary-dark: $dark-gray-900 !default;
+$secondary: $gray-700 !default;
+$secondary-light: $gray-500 !default;
+$secondary-dark: $gray-900 !default;
+
+$bg-colors: (
+  "blue": $blue,
+  "blue-light": $blue-light,
+  "blue-dark": $blue-dark,
+  "indigo": $indigo,
+  "indigo-light": $indigo-light,
+  "indigo-dark": $indigo-dark,
+  "purple": $purple,
+  "purple-light": $purple-light,
+  "purple-dark": $purple-dark,
+  "pink": $pink,
+  "pink-light": $pink-light,
+  "pink-dark": $pink-dark,
+  "red": $red,
+  "red-light": $red-light,
+  "red-dark": $red-dark,
+  "orange": $orange,
+  "orange-light": $orange-light,
+  "orange-dark": $orange-dark,
+  "yellow": $yellow,
+  "yellow-light": $yellow-light,
+  "yellow-dark": $yellow-dark,
+  "green": $green,
+  "green-light": $green-light,
+  "green-dark": $green-dark,
+  "teal": $teal,
+  "teal-light": $teal-light,
+  "teal-dark": $teal-dark,
+  "cyan": $cyan,
+  "cyan-light": $cyan-light,
+  "cyan-dark": $cyan-dark,
+  "primary": $primary,
+  "primary-light": $primary-light,
+  "primary-dark": $primary-dark,
+  "secondary": $secondary,
+  "secondary-light": $secondary-light,
+  "secondary-dark": $secondary-dark,
+) !default;
+
+//yiq
+// Set a specific jump point for requesting color jumps
+$theme-color-interval: 8% !default;
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+$yiq-contrasted-threshold: 150 !default;
+
+$yiq-text-dark: $gray-900 !default;
+$yiq-text-light: $white !default;
+
+
+// scss-docs-start font-variables
+$font-size-root: null !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-sm: $font-size-base * .875 !default;
+$font-size-lg: $font-size-base * 1.25 !default;
+
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: bolder !default;
+
+$font-weight-base: $font-weight-normal !default;
+
+$line-height-base: 1.5 !default;
+$line-height-sm: 1.25 !default;
+$line-height-lg: 2 !default;
+
+$h1-font-size: $font-size-base * 2.5 !default;
+$h2-font-size: $font-size-base * 2 !default;
+$h3-font-size: $font-size-base * 1.75 !default;
+$h4-font-size: $font-size-base * 1.5 !default;
+$h5-font-size: $font-size-base * 1.25 !default;
+$h6-font-size: $font-size-base !default;
+// scss-docs-end font-variables
+
+// scss-docs-start font-sizes
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size
+) !default;
+// scss-docs-end font-sizes
+
