@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.papaio.anonchat.model.MessageTypes.NOTIFICATION;
+import static com.papaio.anonchat.model.MessageTypes.WELCOME;
 
 @Component
 public class SessionEventHandler {
@@ -57,7 +58,7 @@ public class SessionEventHandler {
                         .filter((user) -> !user.equals(userName) && destinationLookupTable.get(user).contains(simpDestination))
                         .count();
 
-                ServerMessage infoMessage = new ServerMessage(systemName, userName, NOTIFICATION, "Users in channel: " + usersCount);
+                ServerMessage infoMessage = new ServerMessage(systemName, userName, WELCOME, "Users in channel: " + usersCount);
                 simpMessagingComponent.sendMessage(infoMessage, simpDestination);
             }
         }

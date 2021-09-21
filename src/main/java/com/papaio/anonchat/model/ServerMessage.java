@@ -5,6 +5,7 @@ public class ServerMessage extends Message {
     private MessageTypes type;
 
     public ServerMessage() {
+        super();
     }
 
     public ServerMessage(String fromUser, String toUser, MessageTypes type, String body) {

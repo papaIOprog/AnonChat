@@ -4,6 +4,7 @@ public enum MessageTypes {
     COMMON,
     PRIVATE,
     NOTIFICATION,
+    WELCOME,
     WARNING,
     ERROR
 }
