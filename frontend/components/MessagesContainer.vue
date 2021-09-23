@@ -13,25 +13,33 @@
 export default {
   name: "MessagesContainer",
   data() {
-    return {}
+    return {
+      colorScheme: this.$store.state.runtime.colorScheme,
+    }
   },
   computed: {
+    color() {
+      return this.$store.state.configuration.selectedColor
+    },
     messages() {
       return this.$store.state.websocket.messages
     },
     stickyChat() {
-      return this.$store.state.configuration.stickyChat
+      return this.$store.state.runtime.stickyChat
     },
-    colorScheme() {
-      return this.$store.state.configuration.colorScheme
-    }
   },
   watch: {
+    color() {
+      this.colorScheme = this.$store.getters["configuration/getColorScheme"]
+    },
     stickyChat() {
       if (this.stickyChat) {
         this.scrollDown();
       }
     }
+  },
+  mounted() {
+    this.colorScheme = this.$store.getters["configuration/getColorScheme"]
   },
   updated() {
     if (this.stickyChat) {
@@ -43,10 +51,10 @@ export default {
       this.$el.scrollTop = this.$el.scrollHeight;
     },
     unstick() {
-      this.$store.commit("configuration/unstick");
+      this.$store.commit("runtime/unstick");
     },
     stick() {
-      this.$store.commit("configuration/stick");
+      this.$store.commit("runtime/stick");
     },
     handleScrollUp() {
       const el = this.$el;

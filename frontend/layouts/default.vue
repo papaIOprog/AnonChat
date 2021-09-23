@@ -9,15 +9,23 @@
 export default {
   name: "Default",
   data() {
-    return {}
+    return {
+      colorScheme: this.$store.state.runtime.colorScheme,
+    }
   },
   computed: {
-    colorScheme() {
-      return this.$store.state.configuration.colorScheme
+    color() {
+      return this.$store.state.configuration.selectedColor
+    },
+  },
+  watch: {
+    color() {
+      this.colorScheme = this.$store.getters["configuration/getColorScheme"]
     }
   },
   mounted() {
     this.$store.dispatch("websocket/init")
+    this.colorScheme = this.$store.getters["configuration/getColorScheme"]
   },
   methods: {
     connect() {

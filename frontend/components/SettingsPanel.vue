@@ -46,6 +46,7 @@ export default {
   name: "SettingsPanel",
   data() {
     return {
+      colorScheme: this.$store.state.runtime.colorScheme,
       message: {
         direction: "INCOME",
         fromUser: "System",
@@ -58,9 +59,17 @@ export default {
     }
   },
   computed: {
-    colorScheme() {
-      return this.$store.state.configuration.colorScheme
+    color() {
+      return this.$store.state.configuration.selectedColor
     },
+  },
+  watch: {
+    color() {
+      this.colorScheme = this.$store.getters["configuration/getColorScheme"]
+    }
+  },
+  mounted() {
+    this.colorScheme = this.$store.getters["configuration/getColorScheme"]
   },
   methods: {
     changeColor(color) {

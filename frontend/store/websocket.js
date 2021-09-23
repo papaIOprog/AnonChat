@@ -20,6 +20,8 @@ export const mutations = {
   },
   stop(state) {
     state.started = false;
+    state.connecting = false;
+    state.connected = false;
   },
   connected(state) {
     state.connected = true;
@@ -30,11 +32,13 @@ export const mutations = {
   },
   disconnected(state) {
     state.connected = false;
+    state.connecting = false;
   },
   setRoomID(state, roomID) {
     state.roomID = roomID.trim().replace(" ", "").toLowerCase()
   },
   addMessage(state, message) {
+    console.log(message)
     if (message.fromUser !== state.username) message.direction = "INCOME"
     else message.direction = "OUTCOME"
     state.messages.push(message)

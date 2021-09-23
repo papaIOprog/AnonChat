@@ -26,15 +26,16 @@ export default {
   name: "Chat",
   data() {
     return {
+      colorScheme: this.$store.state.runtime.colorScheme,
       counter: 0,
     }
   },
   computed: {
+    color() {
+      return this.$store.state.configuration.selectedColor
+    },
     stickyChat() {
       return this.$store.state.configuration.stickyChat
-    },
-    colorScheme() {
-      return this.$store.state.configuration.colorScheme
     },
     connected() {
       return this.$store.state.websocket.connected
@@ -53,6 +54,14 @@ export default {
       const recipient = this.$store.state.websocket.recipient;
       return recipient != null ? "To: " + recipient : ""
     }
+  },
+  watch: {
+    color() {
+      this.colorScheme = this.$store.getters["configuration/getColorScheme"]
+    }
+  },
+  mounted() {
+    this.colorScheme = this.$store.getters["configuration/getColorScheme"]
   },
   methods: {
     outcome() {

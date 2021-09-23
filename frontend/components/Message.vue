@@ -5,9 +5,7 @@
             @click="setRecipient">{{ message.fromUser }}</span> <span class="timestamp">{{ timeString }}</span>
     </div>
 
-    <div class="message-body" :class="colorScheme.light">
-      {{ message.body }}
-    </div>
+    <div class="message-body" :class="colorScheme.light">{{ message.body }}</div>
   </div>
 </template>
 
@@ -33,9 +31,14 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      colorScheme: this.$store.state.runtime.colorScheme,
+    }
   },
   computed: {
+    color() {
+      return this.$store.state.configuration.selectedColor
+    },
     directionClass() {
       return {
         'animate__fadeInRight': this.message.direction === 'OUTCOME' && !this.message.fired,
@@ -43,9 +46,6 @@ export default {
         'income': this.message.direction === 'INCOME',
         'outcome': this.message.direction === 'OUTCOME'
       }
-    },
-    colorScheme() {
-      return this.$store.state.configuration.colorScheme
     },
     timeString() {
       const date = new Date(this.message.timestamp);
@@ -60,6 +60,14 @@ export default {
       return year + dash + month + dash + day + " / " + hours + colon + minutes
     }
   },
+  watch: {
+    color() {
+      this.colorScheme = this.$store.getters["configuration/getColorScheme"]
+    }
+  },
+  mounted() {
+    this.colorScheme = this.$store.getters["configuration/getColorScheme"]
+  },
   methods: {
     fireMessage() {
       this.$store.commit("websocket/fireMessage")
@@ -67,7 +75,7 @@ export default {
     setRecipient() {
       if (this.message.type !== "NOTIFICATION" && this.message.type !== "WELCOME") this.$store.commit("websocket/setRecipient", this.message.fromUser)
     }
-  }
+  },
 }
 </script>
 
@@ -76,26 +84,36 @@ export default {
 .message-skeleton {
   position: relative;
   color: color-yiq($primary);
-  width: 50%;
-  max-width: 500px;
-  @include media("phone", "tablet") {
-    min-width: 200px;
-  }
-  margin-bottom: spacing(1);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: spacing(2);
 
   .message-header {
     display: flex;
     border-radius: spacing(1) spacing(1) 0 0;
-    padding: spacing(1);
+    padding: spacing(2);
     background: $primary;
     justify-content: center;
     flex-direction: column;
+    max-width: $message-width;
+
+    @include media("phone") {
+      width: $message-width-phone;
+    }
   }
 
   .message-body {
+    display: block;
+    white-space: break-spaces;
+    word-break: break-word;
     border-radius: 0 0 spacing(1) spacing(1);
     padding: spacing(2);
     background: $primary-light;
+    max-width: $message-width;
+
+    @include media("phone") {
+      width: $message-width-phone;
+    }
   }
 
   &.income {

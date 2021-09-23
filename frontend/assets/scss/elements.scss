@@ -42,7 +42,7 @@ div.application-container {
   margin-right: auto;
 
   @include media("phone", "tablet") {
-    width: 90%;
+    width: 95%;
   }
 
   &.vertically-centered {

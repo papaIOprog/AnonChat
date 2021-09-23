@@ -2,7 +2,7 @@
   <div class="chat-room-input-skeleton">
     <div class="chat-room-input-wrapper" :class="colorScheme.light">
       <input v-model="roomIDInput" :pattern="pattern.toString()" :disabled="started" class="chat-room-input"
-             type="text">
+             type="text" @keyup.enter="applyRoomId">
     </div>
     <button v-if="!started" class="chat-room-input-button hover-effect pointer" :disabled="!valid"
             :class="colorScheme.dark" @click="applyRoomId">
@@ -22,13 +22,14 @@ export default {
   name: "ChatRoomInput",
   data() {
     return {
+      colorScheme: this.$store.state.runtime.colorScheme,
       roomIDInput: "",
       pattern: "^[0-9a-zA-Z]{1,30}$"
     }
   },
   computed: {
-    colorScheme() {
-      return this.$store.state.configuration.colorScheme
+    color() {
+      return this.$store.state.configuration.selectedColor
     },
     started() {
       return this.$store.state.websocket.started
@@ -43,7 +44,13 @@ export default {
       return {"second-icon-shown": !this.valid}
     }
   },
+  watch: {
+    color() {
+      this.colorScheme = this.$store.getters["configuration/getColorScheme"]
+    }
+  },
   mounted() {
+    this.colorScheme = this.$store.getters["configuration/getColorScheme"]
     this.roomIDInput = this.roomID;
   },
   methods: {

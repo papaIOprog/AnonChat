@@ -16,8 +16,11 @@ public class SimpMessagingComponent {
     }
 
     public void sendMessage(ServerMessage message, String channel) {
-        if (message.getToUser() != null) template.convertAndSendToUser(message.getToUser(), channel, message);
-        else template.convertAndSend(channel, message);
+        if (message.getToUser() != null) {
+            if (!message.getFromUser().equals(message.getToUser()))
+                template.convertAndSendToUser(message.getFromUser(), channel, message);
+            template.convertAndSendToUser(message.getToUser(), channel, message);
+        } else template.convertAndSend(channel, message);
     }
 
     public void sendMessageForListed(ServerMessage message, String channel, Stream<String> users) {

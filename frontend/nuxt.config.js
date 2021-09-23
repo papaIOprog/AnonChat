@@ -27,7 +27,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    "~/plugins/websocketPlugin.js"
+    "~/plugins/websocketPlugin.js",
+    {src: '~/plugins/persistedState.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
