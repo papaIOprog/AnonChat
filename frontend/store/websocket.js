@@ -38,7 +38,6 @@ export const mutations = {
     state.roomID = roomID.trim().replace(" ", "").toLowerCase()
   },
   addMessage(state, message) {
-    console.log(message)
     if (message.fromUser !== state.username) message.direction = "INCOME"
     else message.direction = "OUTCOME"
     state.messages.push(message)

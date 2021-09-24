@@ -76,7 +76,7 @@ export default {
       this.$store.commit("configuration/changeColor")
     },
     turnStickyChat() {
-      this.$store.commit("configuration/stick")
+      this.$store.commit("runtime/stick")
     },
     connect() {
       this.$store.dispatch("websocket/connect")
