@@ -14,17 +14,22 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Value("${com.papaio.anonchat.user-prefix}")
     private String userPrefix;
+    @Value("${com.papaio.anonchat.app-prefix}")
+    private String appPrefix;
+    @Value("${com.papaio.anonchat.endpoint}")
+    private String endpoint;
+
+
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/queue/room");
         config.setUserDestinationPrefix(userPrefix);
-        config.setApplicationDestinationPrefixes("/app");
+        config.setApplicationDestinationPrefixes(appPrefix);
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket")
+        registry.addEndpoint(appPrefix + endpoint).setAllowedOriginPatterns("*")
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .withSockJS();
     }

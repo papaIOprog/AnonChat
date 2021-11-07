@@ -3,7 +3,7 @@
     <div class="chat-header" :class="colorScheme.base">
       <div class="chat-header-button" :class="colorScheme.dark"><span class="badge round"
                                                                       :class="onlineIndicatorClass"></span></div>
-      <div class="chat-header-button hover-effect pointer" :class="colorScheme.dark" @click="connect()"><i
+      <div class="chat-header-button hover-effect pointer" :class="colorScheme.dark" @click="switchConnect()"><i
         class="gg-log-off"></i></div>
       <NuxtLink class="chat-header-button hover-effect pointer" :class="colorScheme.dark" to="/settings/"><i
         class="gg-brush"></i></NuxtLink>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
 
 export default {
   name: "Chat",
@@ -52,7 +51,7 @@ export default {
     },
     recipientString() {
       const recipient = this.$store.state.websocket.recipient;
-      return recipient != null ? "To: " + recipient : ""
+      return recipient != null ? "To: " + this.$userNameGenerator.getName(recipient) : ""
     }
   },
   watch: {
@@ -78,12 +77,9 @@ export default {
     turnStickyChat() {
       this.$store.commit("runtime/stick")
     },
-    connect() {
-      this.$store.dispatch("websocket/connect")
-    },
-    ...mapMutations({
-      toggle: 'runtime/addMessage'
-    })
+    switchConnect() {
+      this.$store.dispatch("websocket/switchConnect")
+    }
   }
 }
 </script>

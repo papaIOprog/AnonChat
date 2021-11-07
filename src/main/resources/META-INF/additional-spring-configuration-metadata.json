@@ -11,6 +11,21 @@
       "type": "java.lang.String",
       "description": "Name of system that will be displayed in server messages, notifications, warnings and etc.",
       "sourceType": "com.papaio.anonchat.properties.ApplicationProperties"
+    },
+    {
+      "name": "com.papaio.anonchat.app-prefix",
+      "type": "java.lang.String",
+      "description": "Defines prefix for messages sent from user."
+    },
+    {
+      "name": "com.papaio.anonchat.endpoint",
+      "type": "java.lang.String",
+      "description": "Defines endpoint name for connections."
+    },
+    {
+      "name": "com.papaio.anonchat.queue-prefix",
+      "type": "java.lang.String",
+      "description": "Defines prefix for subscription channel."
     }
   ]
 }

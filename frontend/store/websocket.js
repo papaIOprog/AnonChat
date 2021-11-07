@@ -1,8 +1,9 @@
 export const state = () => ({
   messages: [],
   userPrefix: "/user",
+  appPrefix: "/app",
   queuePrefix: "/queue/room/",
-  endpointPrefix: "/app/chat/",
+  endpointPrefix: "/chat/",
   roomID: "main",
   connected: false,
   connecting: false,
@@ -70,6 +71,9 @@ export const getters = {
   getQueuePrefix(state) {
     return state.queuePrefix
   },
+  getAppPrefix(state) {
+    return state.appPrefix
+  },
   getRoomID(state) {
     return state.roomID
   },
@@ -107,33 +111,48 @@ export const actions = {
       const client = this.$stompClient;
       const userPrefix = context.getters.getUserPrefix;
       const queuePrefix = context.getters.getQueuePrefix;
+      const appPrefix = context.getters.getAppPrefix;
       const roomID = context.getters.getRoomID;
 
       this.$stompClient.onConnect = function (frame) {
         context.commit("connected")
-        client.subscribe(userPrefix + queuePrefix + roomID, function (message) {
+        context.commit("setUsername", frame.headers["user-name"])
+        client.subscribe(userPrefix + appPrefix + queuePrefix + roomID, function (message) {
           const messageObject = JSON.parse(message.body);
 
-          if (messageObject.type === "WELCOME") context.commit("setUsername", messageObject.toUser)
           context.commit("addMessage", messageObject)
         });
 
-        client.subscribe(queuePrefix + roomID, function (message) {
+        client.subscribe(appPrefix + queuePrefix + roomID, function (message) {
           const messageObject = JSON.parse(message.body);
           context.commit("addMessage", messageObject)
         });
       };
 
-      this.$stompClient.activate()
-    } else {
-      this.$stompClient.deactivate();
-      context.commit("stop")
-      context.commit("wipeMessages")
+      client.activate()
     }
   },
+
+  disconnect(context) {
+    this.$stompClient.deactivate().then(r => r);
+    context.commit("stop")
+    context.commit("wipeMessages")
+  },
+
+  switchConnect(context) {
+    if (!context.getters.getStarted) {
+      context.dispatch("connect").then(r => r)
+    } else {
+      context.dispatch("disconnect").then(r => r)
+    }
+  },
+
+
+
   send(context, message) {
     if (context.getters.getStarted && context.getters.getConnected) {
       const endpointPrefix = context.getters.getEndpointPrefix;
+      const appPrefix = context.getters.getAppPrefix;
       const roomID = context.getters.getRoomID;
       const messageObject = {'body': message};
       const recipient = context.getters.getRecipient;
@@ -142,7 +161,7 @@ export const actions = {
         context.commit("unsetRecipient")
       }
       this.$stompClient.publish({
-        destination: endpointPrefix + roomID,
+        destination: appPrefix + endpointPrefix + roomID,
         headers: {},
         body: JSON.stringify(messageObject)
       });

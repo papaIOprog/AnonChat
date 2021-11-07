@@ -9,6 +9,9 @@
 export default {
   transition: 'main',
 
+  mounted() {
+    this.$store.dispatch("websocket/connect")
+  }
 }
 </script>
 

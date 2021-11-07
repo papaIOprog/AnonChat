@@ -9,14 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
-import static com.papaio.anonchat.model.MessageTypes.NOTIFICATION;
-import static com.papaio.anonchat.model.MessageTypes.WELCOME;
+import static com.papaio.anonchat.model.MessageTypes.*;
 
 @Component
 public class SessionEventHandler {
@@ -25,53 +22,23 @@ public class SessionEventHandler {
     private String userPrefix;
     @Value("${com.papaio.anonchat.system-name}")
     private String systemName;
-    private final Map<String, HashSet<String>> destinationLookupTable;
     private final SimpMessagingComponent simpMessagingComponent;
+    private final LookupTableComponent lookupTableComponent;
 
     @Autowired
-    public SessionEventHandler(SimpMessagingComponent simpMessagingComponent) {
+    public SessionEventHandler(SimpMessagingComponent simpMessagingComponent, LookupTableComponent lookupTableComponent) {
         this.simpMessagingComponent = simpMessagingComponent;
-        destinationLookupTable = new HashMap<>();
-    }
-
-    @EventListener
-    public void handleSessionSubscribeEvent(SessionSubscribeEvent event) {
-        GenericMessage<byte[]> message = (GenericMessage<byte[]>) event.getMessage();
-        String simpDestination = (String) message.getHeaders().get("simpDestination");
-        String userName = Objects.requireNonNull(event.getUser()).getName();
-
-        if (simpDestination != null) {
-
-            destinationLookupTable.putIfAbsent(userName, new HashSet<>());
-            HashSet<String> channels = destinationLookupTable.get(userName);
-            channels.add(simpDestination);
-
-            if (!simpDestination.startsWith(userPrefix)) {
-
-                ServerMessage notificationMessage = new ServerMessage(systemName, NOTIFICATION, userName + " connected");
-                Stream<String> channelUsers = destinationLookupTable.keySet().stream()
-                        .filter((user) -> !user.equals(userName) && destinationLookupTable.get(user).contains(simpDestination));
-                simpMessagingComponent.sendMessageForListed(notificationMessage, simpDestination, channelUsers);
-
-                long usersCount = destinationLookupTable.keySet()
-                        .stream()
-                        .filter((user) -> !user.equals(userName) && destinationLookupTable.get(user).contains(simpDestination))
-                        .count();
-
-                ServerMessage infoMessage = new ServerMessage(systemName, userName, WELCOME, "Users in channel: " + usersCount);
-                simpMessagingComponent.sendMessage(infoMessage, simpDestination);
-            }
-        }
+        this.lookupTableComponent = lookupTableComponent;
     }
 
     @EventListener
     public void handleSessionDisconnectEvent(SessionDisconnectEvent event) {
         String userName = Objects.requireNonNull(event.getUser()).getName();
-        HashSet<String> channels = destinationLookupTable.get(userName);
-        ServerMessage notificationMessage = new ServerMessage(systemName, NOTIFICATION, userName + " disconnected");
+        Set<String> channels = lookupTableComponent.get(userName);
+        ServerMessage notificationMessage = new ServerMessage(systemName, DISCONNECTED, userName);
         for (String channel : channels) {
             simpMessagingComponent.sendMessage(notificationMessage, channel);
         }
-        destinationLookupTable.remove(userName);
+        lookupTableComponent.remove(userName);
     }
 }

@@ -4,9 +4,10 @@ import * as SockJS from "sockjs-client";
 export default (ctx, inject) => {
   ctx.stompClient = new StompJs.Client({
     webSocketFactory() {
-      return new SockJS('/gs-guide-websocket');
+      return new SockJS('/app/start');
     },
     debug(str) {
+      // eslint-disable-next-line no-console
       console.log(str);
     },
     reconnectDelay: 5000,

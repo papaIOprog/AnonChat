@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/static/_nuxt/
+/src/main/resources/static/chat/
+/src/main/resources/static/settings/
+/src/main/resources/static/.nojekyll
+/src/main/resources/static/200.html
+/src/main/resources/static/favicon.ico
+/src/main/resources/static/icon.png
+/src/main/resources/static/index.html
+/src/main/resources/static/sw.js

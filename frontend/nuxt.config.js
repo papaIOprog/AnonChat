@@ -28,6 +28,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     "~/plugins/websocketPlugin.js",
+    "~/plugins/userNameGenerator.js",
     {src: '~/plugins/persistedState.client.js'}
   ],
 
@@ -38,6 +39,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

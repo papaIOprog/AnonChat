@@ -1,5 +1,5 @@
 <template>
-  <div class="application-body scrollable-y" :class="colorScheme.base">
+  <div class="application-body" :class="colorScheme.base">
     <Nuxt/>
   </div>
 </template>

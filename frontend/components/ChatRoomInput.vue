@@ -51,7 +51,12 @@ export default {
   },
   mounted() {
     this.colorScheme = this.$store.getters["configuration/getColorScheme"]
-    this.roomIDInput = this.roomID;
+    const roomID = this.$route.query.roomid
+    if(roomID != null && roomID !== "") {
+      this.roomIDInput = roomID;
+    } else {
+      this.roomIDInput = this.roomID;
+    }
   },
   methods: {
     applyRoomId() {
